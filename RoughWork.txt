@@ -1,0 +1,68 @@
+﻿ if (DbRet?.SubcriberPayment == null) canProceed = Tristate.isYes;
+                                else {
+                                    if (RegType == RegTypeStruct.Ceomembership) {
+                                        if (DbRet.CeomemberIsPaid) canProceed = Tristate.isNo;
+                                        else canProceed = Tristate.isBoth;
+                                    } else {
+                                        if (DbRet.ShareholderIsPaid) canProceed = Tristate.isNo;
+                                        else canProceed = Tristate.isBoth;
+                                    }
+                                }
+
+
+
+
+
+
+                                var refinp=$('#refIdInpt').val();
+                refinp= refinp.trim();
+                aler(refinp);
+                if(refinp!='')
+                  $.ajax({
+                       url: '/home',
+                       method: 'GET',
+                       timeout:2000,
+                       data: {refCode: refinp }})
+                       .then(
+                           function(response){
+                              if(response!='non'){}
+                           },
+                           function(xhr){
+                                        //alert(xhr.status+ '\n'+ xhr.statusText);
+                                    }
+                                )
+            
+            
+            
+
+
+
+            .then(
+                           function(response){ // alert(response);
+                              if(response!=''){
+                                  alert(response);
+                                //  $('#msgCont').val( response); 
+                                //  $('.info-box').data('infobox').open();
+                                ////alert(response);
+                              }esle{
+                                  //$('#msgCont').val(No reference exist for this referal code!); 
+                                  //$('.info-box').data('infobox').open(); 
+                              }
+                           },
+                           function(xhr){alert(xhr.status+ '\n'+ xhr.statusText);}
+                       )
+                   }
+
+
+
+
+
+                    using (var Db = _context) {
+                        var retDb = await Db.SubscriberRegisters.AsNoTracking()
+                            .Where(x => x.Id == refCode)
+                            .Select(subDetial =>new { subDetial.Surname, subDetial.Firstname})
+                            .FirstOrDefaultAsync();
+                        if (retDb != null) { 
+                            return (retDb.Surname + " " + retDb.Firstname).ToUpper();
+                        }
+                    }

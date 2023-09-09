@@ -1,0 +1,23 @@
+﻿@{
+    //Layout = null;
+}
+<div>
+</div>
+
+<script src=~/js/myScript.min.js></script>
+<script>
+    $(function () {
+        //alert(Metro.storage.getItem("anpd"));
+        if (Metro.storage.getItem("anpd") == null) {window.location.assign("@Url.RouteUrl("home")"); } //window.location.assign("/access/DirAuth/khiuhiuh/");
+        else { window.location.assign("AutologAuth/" + Metro.storage.getItem('anpd')); }
+
+        Metro.activity.open({
+            type: 'atom',
+            overlayColor: '#fff',
+            overlayAlpha: 1,
+            text: '<div class=\'mt-2 text-small\'>Please, wait...</div>',
+            overlayClickClose: true
+        });
+      //
+    })
+</script>

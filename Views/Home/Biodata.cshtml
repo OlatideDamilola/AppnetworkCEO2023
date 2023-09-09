@@ -1,0 +1,234 @@
+﻿@{
+    if (ViewBag.formLayout != null) Layout = "~/Views/Shared/Layouts/" + ViewBag.formLayout + ".cshtml";
+    else Layout = "~/Views/Shared/Layouts/_regformLayout.cshtml";
+}
+
+<div class="w-75-md">
+    <div class="p-0 blBG">
+        <div class=" fg-white text-bold h4 m-0 pb-2 pl-3 " style="backdrop-filter:blur(40px);">
+            <div class="text-right">
+                <a class="button put-right alert" href="/home"><span class="mif-arrow-left"></span> </a>
+            </div>
+            <div class='d-flex flex-row flex-align-end w-75'>
+                <span class="mif-user"></span>&nbsp;
+                <span class='fit'>
+                    @if (ViewBag.regType != null && ViewBag.regType == "ceomember") {
+                        <text>CEO Membership </text>
+                    } else {
+                        <text>Shareholder </text>
+                    } Form
+
+                </span>
+            </div>
+
+
+        </div>
+    </div>
+    <div class=" bg-grayWhite">
+        <div class="py-3">
+            <div data-role="stepper" data-step="1" data-view="cycle" data-cls-complete="bg-red" data-cls-current="bg-red" class="w-50 mx-auto"></div>
+        </div>
+
+        <form method="post" data-role="validator" data-interactive-check="true" action="/home/biodata" enctype="multipart/form-data" class="p-2 p-4-md clear">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="RegType" value="@if(ViewBag.regType!=null){
+            <text>@ViewBag.regType</text>
+            }" />
+            <input type="hidden" name="formType" value="@if(ViewBag?.formType!=null){
+            <text>@ViewBag.formType</text>
+            }" />
+            <h5 class="fg-darkBlue text-center text-left-md">BIODATA INFORMATION</h5>
+            <div class="row">
+                <div class="col-md-9 order-fs-2 order-md-1">
+                    <fieldset>
+                    <div class='@if (ViewBag?.regType != "ceomember") {<text>d-none </text>}'>
+                       <label class="text-medium">Referer code:</label>
+                        <input type="text" id='refIdInpt' data-role="input" data-validate="integer" name="referralCode"
+                               class="input w-100 text-bold input-large" value="" placeholder="Referer code" data-custom-buttons="veriBtn">                     
+                        <span class="invalid_feedback">Leave referral Code blank/empty if not sure. </span>
+                    </div>
+                        <label class="text-medium">Title:</label>
+                        <select name="Title" data-validate="required not=-1" class="pt-2 select input-large">
+                            <option value="-1" class="d-none"></option>
+                            <option value="Miss">Miss</option>
+                            <option value="Mr">Mr</option>
+                            <option value="Mrs">Mrs</option>
+                            <option value="Dr">Dr</option>
+                            <option value="Others">Others</option>
+                        </select>
+                        <span class="invalid_feedback">This field is required </span>
+                        <label class="text-medium">Surname:</label>
+                        <input type="text" name="Surname" class="input w-100 input-large" data-validate="required" placeholder="Surname">
+                        <span class="invalid_feedback">This field is required </span>
+                        <label class="text-medium">First name:</label>
+                        <input type="text" name="Firstname" class="input w-100 input-large" data-validate="required" placeholder="Fname">
+                        <span class="invalid_feedback">This field is required </span>
+                    </fieldset>
+                </div>
+                <div class="col-md-3 order-fs-1 order-md-2">
+                    <fieldset>
+                        <div class="d-flex flex-justify-center">
+                            <img src="~/images/avatar.png" id="pbx" style="height:200px;" />
+                        </div>
+                        <div class="d-flex flex-row">
+                            <input oninput="if(this.files[0].size>200000){alert('The size should not exceed 200kb'); }else pbx.src=window.URL.createObjectURL(this.files[0]);" type="file" id="fotoFile" name="fotoFile" class="inputfile" accept="image/*" />
+                            <label for="fotoFile" class="button bg-red fg-white" style="width:93%;"><i class="mif-upload2 mif-2x"></i>Upload Picture</label>
+                            <label class="button bg-darkRed fg-white" style="width:7%;"><span class="mif-replay mif-2x"></span></label>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 ">
+                    <fieldset>
+                        <label class="text-medium">Other names:</label>
+                        <input type="text" name="OtherName" class="input w-100 input-large" data-validate="required" placeholder="Other names">
+                        <span class="invalid_feedback">This field is required </span>
+                        <label class="text-medium">Country:</label>
+                        <select name="Country" data-validate="required not=-1" class="input-large select">
+                            <option value="-1" class="d-none"></option>
+                            <option value="Nigeria">Nigeria</option>
+                        </select>
+                        <span class="invalid_feedback">This field is required </span>
+                        <label class="text-medium">City:</label>
+                        <input type="text" name="City" class="input w-100 input-large" data-validate="required" placeholder="City">
+                        <span class="invalid_feedback">This field is required </span>
+                        <label class="text-medium">Religion:</label>
+                        <select name="religion" data-validate="required not=-1" class="pt-2 select input-large">
+                            <option value="-1" class="d-none"></option>
+                            <option value="African Traditional & Diasporic">African Traditional & Diasporic</option>
+                            <option value="Agnostic">Agnostic</option>
+                            <option value="Atheist">Atheist</option>
+                            <option value="Baha'i">Baha'i</option>
+                            <option value="Buddhism">Buddhism</option>
+                            <option value="Cao Dai">Cao Dai</option>
+                            <option value="Chinese traditional religion">Chinese traditional religion</option>
+                            <option value="Christianity">Christianity</option>
+                            <option value="Hinduism">Hinduism</option>
+                            <option value="Islam">Islam</option>
+                            <option value="Jainism">Jainism</option>
+                            <option value="Juche">Juche</option>
+                            <option value="Judaism">Judaism</option>
+                            <option value="Neo-Paganism">Neo-Paganism</option>
+                            <option value="Nonreligious">Nonreligious</option>
+                            <option value="Rastafarianism">Rastafarianism</option>
+                            <option value="Secular">Secular</option>
+                            <option value="Shinto">Shinto</option>
+                            <option value="Sikhism">Sikhism</option>
+                            <option value="Spiritism">Spiritism</option>
+                            <option value="Tenrikyo">Tenrikyo</option>
+                            <option value="Unitarian-Universalism">Unitarian-Universalism</option>
+                            <option value="Zoroastrianism">Zoroastrianism</option>
+                            <option value="primal-indigenous">primal-indigenous</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <span class="invalid_feedback">This field is required </span>
+                        <label class="text-medium">Address:</label>
+                        <input type="text" name="Address" class="input w-100 input-large" data-validate="required maxlength=255" placeholder="Address" />
+                        <span class="invalid_feedback">This field is required </span>
+                    </fieldset>
+                </div>
+                <div class="col-md-6">
+                    <fieldset>
+                        <label class="text-medium">Date of Birth:</label>
+                        <input data-role="datepicker" name="Dob" data-validate="required" class="mb-2 input-large">
+                        <span class="invalid_feedback">This field is required </span>
+                        <label class="text-medium">State:</label>
+                        <input type="text" name="State" class="input w-100 input-large" data-validate="required" placeholder="State">
+                        <span class="invalid_feedback">This field is required </span>
+                        <label class="text-medium">Email:</label>
+                        <input type="email" name="eMail" class="input w-100 input-large" data-validate="required email" placeholder="Email">
+                        <span class="invalid_feedback">This field is required </span>
+                        <label class="text-medium">Phone number:</label>
+                        <input type="text" name="Phone" class="input w-100 input-large" data-validate="required integer" placeholder="Phone number">
+                        <span class="invalid_feedback">This field is required </span>
+                    </fieldset>
+                </div>
+            </div>
+            <div>
+                <h5 class="fg-darkBlue">Password Info</h5>
+                <fieldset class="row">
+                    <div class="col-md-6">
+                        <label class="text-medium">Your Password:</label>
+                        <input id="tbxRc" type="text" name="Password" class="input w-100 text-bold input-large" value="" data-validate="maxlength=8" placeholder="Your password">
+                        <span class="invalid_feedback">Required,not more than 8 characters   </span>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-medium">Confirm Password:</label>
+                        <input id="tbxRc" type="password" class="input w-100 text-bold input-large" value="" data-validate="required equals=Password" placeholder="Confirm your password">
+                        <span class="invalid_feedback">Password is not the same. </span>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="mt-5">
+                <button type="submit" class="button ml-4 bg-red fg-white place-right text-medium">Proceed >></button>
+                <a href="/home" class="button bg-red fg-white place-right text-medium">Cancel</a>
+            </div>
+        </form>
+        <input type="hidden" id="hdMsg" value="@ViewBag?.DispMsg" />
+    </div>
+</div>
+
+
+<div class="info-box" data-role="infobox">
+    <span class="button square closer"></span>
+    <div class="info-box-content">
+        <p class="d-flex flex-row"><span class="mif-info mif-2x fg-red"></span>&nbsp;<b>APPNETWORK</b></p>
+        <em id="msgCont" class="text-small"></em>
+        <div id='btnInfo' class="pb-6 pt-4">
+            <button type="submit" class="button ml-4 bg-red fg-white place-right text-medium">Okay</button>
+        </div>
+    </div>
+</div>
+
+
+<script src=~/js/myScript.min.js></script>
+<script src=~/js/fitty.min.js></script>
+
+<script>
+
+        fitty('.fit',{maxSize:30});
+
+          $(function(){
+
+            var inMsg = $("#hdMsg").val();   
+            if (inMsg != "") { $("#msgCont").val(inMsg); $('.info-box').data('infobox').open(); }
+
+               $('#btnInfo').click(function () {
+                    $('.info-box').data('infobox').close();
+               });
+
+
+
+          });
+
+          function veriRefCod(){
+              var refinp=$('#refIdInpt').val().trim(); 
+                if(refinp!=''){ 
+                    $.ajax({
+                       url: '/home/VerifyReferal',
+                       method:'GET',
+                       timeout:6000,
+                       data: {refCode: refinp }})
+                       .then(
+                            function(response){
+                                if(response!='') Metro.infobox.create("<p>This referal Code is belong to</p> <b>"+ response + "</b>", "info");//alert(response);
+                                else Metro.infobox.create("<p>This Referal Code does not exist.</p>", "alert");//alert('There is no record found for this Referal code');  
+                             },
+                             function(xhr){alert(xhr.status+ '\n'+ xhr.statusText);}
+                        )                      
+                   }     
+          }
+
+
+    var veriBtn = [
+        {
+            html: "<span class='mif-user-check'></span>&nbsp verify",
+            cls: "alert",
+            onclick: "veriRefCod"
+        }
+    ]
+
+
+</script>

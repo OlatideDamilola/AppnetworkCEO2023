@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@ViewData["Title"]</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link href="~/css/appstyle.css" rel="stylesheet" type="text/css" asp-append-version=true />
+
+    <style>
+        .blBG {
+            background: url(/images/peakpx.jpg) fixed no-repeat center;
+            -moz-background-size: cover;
+            background-size: cover;
+            -webkit-background-size: cover;
+        }
+            .inputfile {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+        }
+
+            .inputfile + label {
+                display: inline-block;
+                cursor: pointer;
+            }
+    </style>
+</head>
+<body class="d-flex flex-justify-center bg-darkCyan">
+        
+        @RenderBody()   
+
+  
+</body>
+</html>

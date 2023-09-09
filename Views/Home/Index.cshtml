@@ -1,0 +1,89 @@
+﻿@{
+    Layout = "";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Appnetwork</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link href="~/css/appstyle.css" rel="stylesheet" type="text/css" asp-append-version=true />
+
+    <style>
+        .blBG {
+            background: url(/images/peakpx.jpg) fixed no-repeat center;
+            -moz-background-size: cover;
+            background-size: cover;
+            -webkit-background-size: cover;
+        }
+    </style>
+</head>
+<body class="blBG m4-cloak">
+    <div class="w-100" style="backdrop-filter: blur(40px)">
+        <div class="d-flex h-vh-100 flex-align-center flex-justify-center">
+            <div class="lock-box text-center fg-black">
+                <form action='home/Login' method='post' class="px-3 ">
+                    @Html.AntiForgeryToken()
+                    <img src="~/images/APNlogo.png" style="max-width:128px">
+                    <div class="my-3 text-bold">Appnetwork CEO</div>
+                    <input type="email" id='tbxemail' name='email' data-role="input" required placeholder="email adress" data-prepend='<span class=mif-mail>'>
+                    <input type="password" id='txbpword' name='password' data-role="input" required class="mt-3" placeholder="Password" data-prepend='<span class=mif-key>'>
+                    <button type="submit" id='btnLog' class="button bg-red mt-5 fg-white text-medium w-50">
+                        <span class="load-marker mif-loop2"></span>
+                        <span class="load-caption">Sign-in</span>
+
+                    </button>
+                    <br>
+                    <span class="fg-white">Or Join</span>
+                </form>
+                <a href="registration/ceomember" class="image-button w-75 bg-blue fg-white" type="button">
+                    <span class="mif-user icon"></span>
+                    <span class="caption">CEO Membership</span>
+                </a>
+                <a href="registration/shareholder" class="image-button w-75 bg-darkYellow fg-white mt-2" type="button">
+                    <span class="mif-users icon"></span>
+                    <span class="caption">Shareholder</span>
+                </a>
+                <br />
+                <a href="#" class="fg-white no-decor"><em>Lost my password</em></a>
+
+                <div class=" mb-2-md fg-white reduce-1 fixed-bottom">
+                    Appnetwork &copy; 2023
+                    <span class="fg-white">|</span>
+                    <a href="#" class="no-decor text-bold fg-white">About us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-box" data-role="infobox">
+        <span class="button square closer"></span>
+        <div class="info-box-content">
+            <h5><span class="mif-info fg-red"></span> APPNETWORK</h5>
+            <em class="text-small">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</em>
+            <div class="pb-6 pt-4">
+                <a href="" type="submit" class="button ml-4 bg-red fg-white place-right text-medium">Okay</a>
+                <a href="/home" class="button bg-red fg-white place-right text-medium">Cancel</a>
+            </div>
+        </div>
+    </div>
+
+    <script src=~/js/myScript.min.js></script>
+    <script>
+        $(function(){
+
+            $('.info-box').data('infobox').open();
+
+
+
+
+
+            $('#btnLog').click(function () {
+                    var upcomb = $("input[name=tbxemail]").val().trim() + '`' + $("input[name=txbpword]").val().trim();
+                    $('#btnLog').toggleClass('loading');
+                    if (keepLog) Metro.storage.setItem("anpd", upcomb);
+                })
+        })
+    </script>
+</body>
+</html>

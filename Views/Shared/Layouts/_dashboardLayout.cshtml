@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@ViewData["Title"]</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link href="~/css/appstyle.css" rel="stylesheet" type="text/css" asp-append-version=true />
+
+</head>
+<body class="m4-cloak">
+    <div class="social-box">
+        <div class="header bg-darkBlue fg-white">
+            <img src="~/images/meme.jpg" class="avatar" style="width:100px;height: 100px" />
+            <div class="title">Olatide Damilola</div>
+            <div class="subtitle">CEO Member</div>
+        </div>
+        <ul class="skills m-0 p-0">
+            <li>
+                <div class="text-bold">Ref code</div>
+                <div>A2D444</div>
+            </li>
+            <li>
+                <div class="text-bold">36</div>
+                <div>FILMS</div>
+            </li>
+        </ul>
+        <!--    <hr class="w-100 bg-darkBlue">-->
+        <ul id="tabs"
+            data-role="tabs"
+            data-expand="true"
+            data-cls-tabs-list-item-active="fg-orange"
+            data-on-tab="console.log('tab', arguments)"
+            data-on-tab-close="console.log('close', arguments)"
+            data-on-tab-open="console.log('open', arguments)"
+            data-update-uri="true"
+            data-tabs-position="top"
+            data-tabs-stype="group">
+            <li>
+                <a href="#" class="dropdown-toggle"><span class="mif-user icon"></span> CEO Mem</a>
+                <ul class="d-menu" data-role="dropdown">
+                    <li><a href="#_target_4">Transfer</a></li>
+                    <li><a href="#_target_4">Item 1</a></li>
+                    <li><a href="#_target_4">Item 1</a></li>
+                    <li><a href="#_target_4">Item 1</a></li>
+                    <li><a href="#_target_4">Item 1</a></li>
+                </ul>
+            </li>
+            <li id="1"><a href="#home"><span class="mif-users icon"></span>Shareholder</a></li>
+
+        </ul>
+
+    </div>
+
+
+
+    @RenderBody()
+    <script src=~/js/myScript.min.js></script>
+</body>
+</html>
