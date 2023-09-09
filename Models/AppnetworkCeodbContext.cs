@@ -12,6 +12,7 @@ public partial class AppnetworkCeodbContext : DbContext
 
     public AppnetworkCeodbContext(DbContextOptions<AppnetworkCeodbContext> options)
         : base(options)
+
     {
     }
 
