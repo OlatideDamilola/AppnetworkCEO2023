@@ -10,6 +10,8 @@ namespace AppnetworkCEO2023.Controllers {
     public class HomeController : Controller {
         private readonly AppnetworkCeodbContext _context;
         private static readonly PayStackApi _api = new("sk_test_4d565d7c4e00fc223282a2d828b793d4736e6768");
+        //[TempData]
+        //public string? gMsg { get; set; };
         public HomeController(AppnetworkCeodbContext context) {
             _context = context;
         }
@@ -21,16 +23,26 @@ namespace AppnetworkCEO2023.Controllers {
         //    } catch { return null; }
         //}
 
-        public async Task<bool> VerifyLog(string email, string pword) {
+        public async Task<string> VerifySubcriber(string email, string pword) {
+            string? LogId =null;
             try {
                 using (var Db = _context) {
-                    var retVal = await Db.SubscriberRegisters.AsNoTracking().Where(x => x.Email.ToLower() == email && x.Password == pword).Select(subDetial => subDetial.Id).AnyAsync();
-                    if (retVal) return true;
+                    var dbRet = await Db.SubscriberRegisters.AsNoTracking()
+                        .Where(x => x.Password == pword.Trim() && x.Email == email.Trim().ToLower())
+                        .Include(cPay => cPay.CeoPayment)
+                        .Include(sPay => sPay.ShareholdersPayment)
+                        .Select(rD => new { rD.Id, rD.CeomemberIsPaid, rD.ShareholderIsPaid, rD.CeoPayment, rD.ShareholdersPayment })
+                        .SingleOrDefaultAsync();
+                    if (dbRet != null) {
+                        if (dbRet.CeoPayment != null && (dbRet.CeoPayment?.Isconfirmed != null && dbRet.CeoPayment?.Isconfirmed != false) && (dbRet.CeomemberIsPaid)) LogId = dbRet.Id.ToString() + "/" + RegTypeStruct.Ceomembership;
+                        else if (dbRet.ShareholdersPayment != null && (dbRet.ShareholdersPayment?.Isconfirmed != null && dbRet.CeoPayment?.Isconfirmed != false) && (dbRet.ShareholderIsPaid)) LogId = dbRet.Id.ToString() + "/" + RegTypeStruct.Shareholder;
+                    }
                 }
+
             } catch {
-                return false;
+                return LogId;
             }
-            return false;
+            return LogId;
         }
 
         public async Task<string> VerifyReferal(string refCode) {
@@ -192,7 +204,7 @@ namespace AppnetworkCEO2023.Controllers {
             }
             return View();
         }
-
+            
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
@@ -336,12 +348,36 @@ namespace AppnetworkCEO2023.Controllers {
                 return Redirect(Request.Headers["Referer"].ToString());
             }
         }
+
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> Login(string pword, string email) {
+            try {
+                string logId = await VerifySubcriber(email, pword);
+                if (logId != null) {
+                    HttpContext.Session.SetString("logId", logId);
+                    RedirectToAction("index", "dashboard");
+                }
+                TempData["gMsg"] = "Invalid email or password!";
+            } catch {
+                return RedirectToAction("index");
+            }
+            return RedirectToAction("index");
+        }
+
         public async Task<IActionResult> AutologAuth(string anpd) {
-            if (await VerifyLog(anpd.Split('`')[0], anpd.Split()[1])) return RedirectToAction("");
-            else return RedirectToAction("Index");
+            string logId = await VerifySubcriber(anpd.Split('`')[0], anpd.Split()[1]);
+            if (logId != null) {
+                HttpContext.Session.SetString("logId", logId);
+                return RedirectToAction("index","dashboard");
+            } else return RedirectToAction("Index");
         }
 
         public IActionResult Index() {
+           
+                if (TempData["gMsg"] != null) ViewBag.DispMsg = TempData["gMsg"];  
+          
             return View();
         }
 

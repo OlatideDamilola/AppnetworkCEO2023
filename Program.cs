@@ -38,14 +38,15 @@ app.UseSession();
 
 
 app.MapControllerRoute(
-    name: "ceo",
-    pattern: "dashboard/ceomember",
-    defaults: new { controller ="Dashboard", action = "Ceoindex" });
-app.MapControllerRoute(
     name: "shareholder",
     pattern: "dashboard/shareholder",
     defaults: new { controller ="Dashboard", action = "Shareholderindex" }); 
 
+
+app.MapControllerRoute(
+    name: "ceo",
+    pattern: "dashboard/ceomember",
+    defaults: new { controller ="Dashboard", action = "Ceomember" });
 
  app.MapControllerRoute(
     name: "register",

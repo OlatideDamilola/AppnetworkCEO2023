@@ -22,12 +22,12 @@
     <div class="w-100" style="backdrop-filter: blur(40px)">
         <div class="d-flex h-vh-100 flex-align-center flex-justify-center">
             <div class="lock-box text-center fg-black">
-                <form action='home/Login' method='post' class="px-3 ">
+                <form action='home/login' method='post' class="px-3 ">
                     @Html.AntiForgeryToken()
                     <img src="~/images/APNlogo.png" style="max-width:128px">
                     <div class="my-3 text-bold">Appnetwork CEO</div>
-                    <input type="email" id='tbxemail' name='email' data-role="input" required placeholder="email adress" data-prepend='<span class=mif-mail>'>
-                    <input type="password" id='txbpword' name='password' data-role="input" required class="mt-3" placeholder="Password" data-prepend='<span class=mif-key>'>
+                    <input type="email" id='tbxemail' name='email' data-role="input" required placeholder="Email address" data-prepend='<span class=mif-mail>'>
+                    <input type="password" id='txbpword' name='pword' data-role="input" required class="mt-3" placeholder="Password" data-prepend='<span class=mif-key>'>
                     <button type="submit" id='btnLog' class="button bg-red mt-5 fg-white text-medium w-50">
                         <span class="load-marker mif-loop2"></span>
                         <span class="load-caption">Sign-in</span>
@@ -56,23 +56,29 @@
         </div>
     </div>
 
-    <div class="info-box" data-role="infobox">
-        <span class="button square closer"></span>
-        <div class="info-box-content">
-            <h5><span class="mif-info fg-red"></span> APPNETWORK</h5>
-            <em class="text-small">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</em>
-            <div class="pb-6 pt-4">
-                <a href="" type="submit" class="button ml-4 bg-red fg-white place-right text-medium">Okay</a>
-                <a href="/home" class="button bg-red fg-white place-right text-medium">Cancel</a>
-            </div>
+    <input type="hidden" id="hdMsg" value="@ViewBag?.DispMsg" />
+
+  <div class="info-box" data-role="infobox">
+    <span class="button square closer"></span>
+    <div class="info-box-content">
+        <p class="d-flex flex-row"><span class="mif-info mif-2x fg-red"></span>&nbsp;<b>APPNETWORK</b></p>
+        <em id="msgCont" class="text-small"></em>
+        <div id='btnInfo' class="pb-6 pt-4">
+            <button type="submit" class="button ml-4 bg-red fg-white place-right text-medium">Okay</button>
         </div>
     </div>
+</div>
 
     <script src=~/js/myScript.min.js></script>
     <script>
         $(function(){
 
-            $('.info-box').data('infobox').open();
+              var inMsg = $("#hdMsg").val();   
+            if (inMsg != "") { $("#msgCont").val(inMsg); $('.info-box').data('infobox').open(); }
+
+               $('#btnInfo').click(function () {
+                    $('.info-box').data('infobox').close();
+               });
 
 
 

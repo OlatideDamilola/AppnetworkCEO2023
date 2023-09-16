@@ -66,3 +66,11 @@
                             return (retDb.Surname + " " + retDb.Firstname).ToUpper();
                         }
                     }
+
+
+
+
+                    using (var Db = _context) {
+                    var retVal = await Db.SubscriberRegisters.AsNoTracking().Where(x => x.Email.ToLower() == email && x.Password == pword).Select(subDetial => subDetial.Id).AnyAsync();
+                    if (retVal) return true;
+                }
